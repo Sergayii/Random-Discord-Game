@@ -10,6 +10,7 @@ import com.honker.game.entities.misc.Enter;
 import com.honker.game.entities.misc.Exit;
 import com.honker.game.entities.misc.Spawn;
 import com.honker.game.items.Item;
+import static com.honker.main.Variables.WINDOW_SIZE;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -17,47 +18,47 @@ public class Map {
     
     public static Map mapUpLeft = new Map(
        new String[] {
-        "                    ",
-        "                    ",
-        "                    ",
-        "                    ",
-        "                    ",
-        "                    ",
-        "                    ",
-        "                    ",
-        "                    ",
-        "                    ",
-        "                    ",
-        "                    ",
-        "                    ",
-        "                    ",
-        "                    ",
-        "                    ",
-        "                    ",
-        "                    ",
-        "                    ",
-        "                    "
+        "GGGGGGGGGGGGGGGGGGGG",
+        "GGGGGGGGGGGGGGGGGGGG",
+        "GGGGGGGGGGGGGGGGGGGG",
+        "GGGGGGGGGGGGGGGGGGGG",
+        "GGGGGGGGGGGGGGGGGGGG",
+        "GGGGGGGGGGGGGGGGGGGG",
+        "GGGGGGGGGGGGGGGGGGGG",
+        "GGGGGGGGGGGGGGGGGGGG",
+        "GGGGGGGGGGGGGGGGGGGG",
+        "GGGGGGGGGGGGGGGGGGGG",
+        "GGGGGGGGGGGGGGGGGGGG",
+        "GGGGGGGGDDDDGGGGGGGG",
+        "GGGGGGGGDDDDGGGGGGGG",
+        "GGGGGGGGDDDDGGGGGGGG",
+        "GGGGGGGGGGGGGGGGGGGG",
+        "GGGGGGGGGGGGGGGGGGGG",
+        "GGGGGGGGGGGGGGGGGGGG",
+        "GGGGGGGGGGGGGGGGGGGG",
+        "GGGGGGGGGGGGGGGGGGGG",
+        "GGGGGGGGGGGGGGGGGGGG"
     }, new String[] {
-        "####################",
-        "#                  #",
-        "# >                #",
-        "#                  #",
-        "#                  #",
-        "#                  #",
-        "#                  #",
-        "#                  #",
-        "#                  #",
-        "#        PP         ",
-        "#        PP         ",
-        "#                  #",
-        "#                  #",
-        "#                  #",
-        "#                  #",
-        "#                  #",
-        "#                  #",
-        "#                  #",
-        "#                  #",
-        "#########  #########"
+        "TTTTTTTTTTTTTTTTTTTT",
+        "T                  T",
+        "T >                T",
+        "T                  T",
+        "T                  T",
+        "T                  T",
+        "T                  T",
+        "T                  T",
+        "T                  T",
+        "T        PP         ",
+        "T        PP         ",
+        "T                  T",
+        "T                  T",
+        "T                  T",
+        "T                  T",
+        "T                  T",
+        "T                  T",
+        "T                  T",
+        "T                  T",
+        "TTTTTTTTT  TTTTTTTTT"
     }, new String[] {
         "                    ",
         "                    ",
@@ -83,26 +84,26 @@ public class Map {
     
     public static Map mapUpRight = new Map(
        new String[] {
-        "                    ",
-        "                    ",
-        "                    ",
-        "                    ",
-        "                    ",
-        "                    ",
-        "                    ",
-        "                    ",
-        "                    ",
-        "                    ",
-        "                    ",
-        "                    ",
-        "                    ",
-        "                    ",
-        "                    ",
-        "                    ",
-        "                    ",
-        "                    ",
-        "                    ",
-        "                    "
+        "####################",
+        "####################",
+        "####################",
+        "####################",
+        "####################",
+        "####################",
+        "####################",
+        "####################",
+        "####################",
+        "####################",
+        "####################",
+        "####################",
+        "####################",
+        "####################",
+        "####################",
+        "####################",
+        "####################",
+        "####################",
+        "####################",
+        "####################"
     }, new String[] {
         "####################",
         "#                  #",
@@ -149,26 +150,26 @@ public class Map {
     
     public static Map mapDownLeft = new Map(
        new String[] {
-        "                    ",
-        "                    ",
-        "                    ",
-        "                    ",
-        "                    ",
-        "                    ",
-        "                    ",
-        "                    ",
-        "                    ",
-        "                    ",
-        "                    ",
-        "                    ",
-        "                    ",
-        "                    ",
-        "                    ",
-        "                    ",
-        "                    ",
-        "                    ",
-        "                    ",
-        "                    "
+        "####################",
+        "####################",
+        "####################",
+        "####################",
+        "####################",
+        "####################",
+        "####################",
+        "####################",
+        "####################",
+        "####################",
+        "####################",
+        "####################",
+        "####################",
+        "####################",
+        "####################",
+        "####################",
+        "####################",
+        "####################",
+        "####################",
+        "####################"
     }, new String[] {
         "#########  #########",
         "#                  #",
@@ -215,26 +216,26 @@ public class Map {
     
     public static Map mapDownRight = new Map(
        new String[] {
-        "                    ",
-        "                    ",
-        "                    ",
-        "                    ",
-        "                    ",
-        "                    ",
-        "                    ",
-        "                    ",
-        "                    ",
-        "                    ",
-        "                    ",
-        "                    ",
-        "                    ",
-        "                    ",
-        "                    ",
-        "                    ",
-        "                    ",
-        "                    ",
-        "                    ",
-        "                    "
+        "####################",
+        "####################",
+        "####################",
+        "####################",
+        "####################",
+        "####################",
+        "####################",
+        "####################",
+        "####################",
+        "####################",
+        "####################",
+        "####################",
+        "####################",
+        "####################",
+        "####################",
+        "####################",
+        "####################",
+        "####################",
+        "####################",
+        "####################"
     }, new String[] {
         "#########  #########",
         "#                  #",
@@ -338,6 +339,10 @@ public class Map {
     }
     
     public Floor getRandomEmptyTile() {
+        if(floors.isEmpty()) {
+            return null;
+        }
+        
         Floor floor;
         while(true) {
             floor = floors.get(new Random().nextInt(floors.size()));
@@ -367,6 +372,9 @@ public class Map {
     
     public int[] getRandomPosition() {
         Floor floor = getRandomEmptyTile();
+        if(floor == null) {
+            return new int[] {WINDOW_SIZE / 2, WINDOW_SIZE / 2};
+        }
         return new int[] {floor.x, floor.y};
     }
     

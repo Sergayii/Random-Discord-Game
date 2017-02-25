@@ -9,6 +9,7 @@ import com.honker.game.entities.misc.Exit;
 import com.honker.game.entities.misc.Spawn;
 import static com.honker.main.Main.game;
 import static com.honker.main.Variables.ENTITY_SIZE;
+import java.awt.Image;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -44,8 +45,17 @@ public class Location {
                     for(int a = 0; a < row.length(); a++){
                         char col = row.charAt(a);
                         switch(col){
+                            case '#':
+                                new Floor(x, y, game.img.STONE_FLOOR_SPRITE, this, map);
+                                break;
+                            case 'D':
+                                new Floor(x, y, game.img.DIRT_SPRITE, this, map);
+                                break;
+                            case 'G':
+                                new Floor(x, y, game.img.GRASS_SPRITE, this, map);
+                                break;
                             case ' ':
-                                new Floor(x, y, game.img.FLOOR_SPRITE, this, map);
+                                new Floor(x, y, game.img.EMPTY_SPRITE, this, map);
                                 break;
                         }
                         x += ENTITY_SIZE;
@@ -60,7 +70,12 @@ public class Location {
                         char col = row.charAt(a);
                         switch(col){
                             case '#':
-                                new Block(x, y, game.img.BLOCK_SPRITE, this, map);
+                                new Block(x, y, game.img.STONE_BLOCK_SPRITE, this, map);
+                                break;
+                            case 'T':
+                                int tree = new Random().nextInt(3) + 1;
+                                Image img = tree == 1 ? game.img.TREE1 : tree == 2 ? game.img.TREE2 : tree == 3 ? game.img.TREE3 : null;
+                                new Block(x, y, img, this, map);
                                 break;
                             case 'P':
                                 new Spawn(x, y, this, map);

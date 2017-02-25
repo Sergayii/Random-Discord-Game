@@ -99,15 +99,16 @@ public abstract class NPC extends Entity {
         
         inventoryString += "Inventory:\n";
         
+        int index = 1;
         for(Item item : inventory) {
             if(item != null) {
-                int index = inventory.indexOf(item) + 1;
                 check:
                 if(inventoryString.contains(index + ". ")) {
                     index++;
                     break check;
                 }
                 inventoryString += index + ". " + item.name + "\n";
+                index++;
             }
         }
         

@@ -169,15 +169,16 @@ public class InventoryMenu extends Menu {
         } else if(menu == 5) {
             String inventoryString = new String();
         
+            int index = 1;
             for(Item item : player.player.inventory) {
                 if(item != null) {
-                    int index = player.player.inventory.indexOf(item) + 1;
                     check:
                     if(inventoryString.contains(index + ". ")) {
                         index++;
                         break check;
                     }
                     inventoryString += index + ". " + item.name + "\n";
+                    index++;
                 }
             }
 
@@ -190,15 +191,16 @@ public class InventoryMenu extends Menu {
         } else if(menu == 6) {
             String inventoryString = new String();
         
+            int index = 1;
             for(Item item : player.player.inventory) {
                 if(item != null) {
-                    int index = player.player.inventory.indexOf(item) + 1;
                     check:
                     if(inventoryString.contains(index + ". ")) {
                         index++;
                         break check;
                     }
                     inventoryString += index + ". " + item.name + "\n";
+                    index++;
                 }
             }
 
