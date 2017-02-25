@@ -126,12 +126,15 @@ public abstract class NPC extends Entity {
     }
     
     public int unequip(Item item) {
-        if(inventory.size() > maxInventorySize - 1 || item.equals(Weapon.DEFAULT)) {
+        if(inventory.size() > maxInventorySize - 1) {
             return -1;
         }
         
         Item itemUnequipped;
         if(item.equals(weapon)) {
+            if(item.equals(Weapon.DEFAULT)) {
+                return 0;
+            }
             equipSTR -= weapon.STR;
             equipAG -= weapon.AG;
             equipDEF -= weapon.DEF;

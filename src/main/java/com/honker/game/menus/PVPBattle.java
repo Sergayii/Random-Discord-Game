@@ -75,11 +75,11 @@ public class PVPBattle extends Battle {
             if(npc.equals(fighter1)) {
                 Image sprite = fighter2.sprite;
                 Image scaledSprite = sprite.getScaledInstance(sprite.getWidth(null) * 10, sprite.getHeight(null) * 10, Image.SCALE_DEFAULT);
-                g.drawImage(scaledSprite, WINDOW_SIZE / 2 - scaledSprite.getWidth(null) / 2, WINDOW_SIZE / 2 - scaledSprite.getHeight(null) / 2 + 200, null);
+                g.drawImage(scaledSprite, WINDOW_SIZE / 2 - scaledSprite.getWidth(null) / 2, WINDOW_SIZE / 2 - scaledSprite.getHeight(null) / 2 + 100, null);
             } else if(npc.equals(fighter2)) {
                 Image sprite = fighter1.sprite;
                 Image scaledSprite = sprite.getScaledInstance(sprite.getWidth(null) * 10, sprite.getHeight(null) * 10, Image.SCALE_DEFAULT);
-                g.drawImage(scaledSprite, WINDOW_SIZE / 2 - scaledSprite.getWidth(null) / 2, WINDOW_SIZE / 2 - scaledSprite.getHeight(null) / 2 + 200, null);
+                g.drawImage(scaledSprite, WINDOW_SIZE / 2 - scaledSprite.getWidth(null) / 2, WINDOW_SIZE / 2 - scaledSprite.getHeight(null) / 2 + 100, null);
             }
 
             ByteArrayOutputStream output = new ByteArrayOutputStream();

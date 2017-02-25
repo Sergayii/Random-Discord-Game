@@ -8,7 +8,7 @@ import java.awt.Image;
 
 public class Potion extends Item {
     
-    public static final Potion HEALTH_POTION = new Potion(game.img.ITEM_BAG_SPRITE, "Health potion", "A potion that restores 30 health", true) {
+    public static final Potion HEALTH_POTION = new Potion(game.img.ITEM_BAG_SPRITE, "Health potion", "A potion that restores 30 health", Item.RARITY_COMMON) {
         @Override
         public int inBattle(Player player) {
             int value = super.inBattle(player);
@@ -28,7 +28,7 @@ public class Potion extends Item {
         }
     };
     
-    public static final Potion DEBUG_POTION = new Potion(game.img.ITEM_BAG_SPRITE, "Debug potion", "A potion used for debugging", false) {
+    public static final Potion DEBUG_POTION = new Potion(game.img.ITEM_BAG_SPRITE, "Debug potion", "A potion used for debugging", Item.RARITY_DEV) {
         @Override
         public int inBattle(Player player) {
             int value = super.inBattle(player);
@@ -59,11 +59,9 @@ public class Potion extends Item {
         return 0;
     };
     
-    public Potion(Image sprite, String name, String description, boolean addToItems) {
-        super(sprite, name, description, false, true);
+    public Potion(Image sprite, String name, String description, int rarity) {
+        super(sprite, name, description, false, true, rarity);
         
-        if(addToItems && !Item.items.contains(this)) {
-            Item.items.add(this);
-        }
+        Item.addToItemsList(this);
     }
 }
