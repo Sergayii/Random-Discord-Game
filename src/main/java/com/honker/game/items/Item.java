@@ -13,7 +13,7 @@ public abstract class Item {
     public static final int RARITY_SUPREME = 4;
     public static final int RARITY_EPIC = 5;
     public static final int RARITY_LEGENDARY = 6;
-    public static final int RARITY_TRANSCENDENT = 7;
+    public static final int RARITY_ANCIENT = 7;
     
     public static ArrayList<Item> devItems = new ArrayList<Item>();
     public static ArrayList<Item> commonItems = new ArrayList<Item>();
@@ -22,7 +22,7 @@ public abstract class Item {
     public static ArrayList<Item> supremeItems = new ArrayList<Item>();
     public static ArrayList<Item> epicItems = new ArrayList<Item>();
     public static ArrayList<Item> legendaryItems = new ArrayList<Item>();
-    public static ArrayList<Item> transcendentItems = new ArrayList<Item>();
+    public static ArrayList<Item> ancientItems = new ArrayList<Item>();
     
     public boolean equippable, usable;
     public String name, description;
@@ -73,9 +73,9 @@ public abstract class Item {
                 if(!legendaryItems.contains(item))
                     legendaryItems.add(item);
                 break;
-            case RARITY_TRANSCENDENT:
-                if(!transcendentItems.contains(item))
-                    transcendentItems.add(item);
+            case RARITY_ANCIENT:
+                if(!ancientItems.contains(item))
+                    ancientItems.add(item);
                 break;
         }
     }
@@ -85,9 +85,45 @@ public abstract class Item {
             Weapon weapon = (Weapon)item;
             
             return  "Item name: " + weapon.name +  "\nQuality: " + weapon.quality + "\nDescription:\n" + weapon.description + "\n\nMinimum damage: " + 
-                    weapon.minDamage + "\nMaximum damage: " +  weapon.maxDamage;
+                    weapon.minDamage + "\nMaximum damage: " + weapon.maxDamage + "\n\nAdditional stats:\n" + "Strength: " + weapon.STR + "\nAgility: " + 
+                    weapon.AG + "\nDefense: " + weapon.DEF + "\nSpeed: " + weapon.SPD;
+        } else if(item instanceof Armor) {
+            Armor armor = (Armor)item;
+            
+            return  "Item name: " + armor.name +  "\nQuality: " + armor.quality + "\nDescription:\n" + armor.description + "\n\nSlot: " + 
+                    armor.slot + "\n\nAdditional stats:\n" + "Strength: " + armor.STR + "\nAgility: " + armor.AG + "\nDefense: " + 
+                    armor.DEF + "\nSpeed: " + armor.SPD;
         }
         return "Item name: " + item.name+  "\n\nDescription:\n" + item.description;
+    }
+    
+    public static Item getRandomItemWithRarity() {
+        ArrayList<Item> items = new ArrayList<Item>();
+        int chance = new Random().nextInt(36) + 1;
+        if(chance >= 1 && chance <= 10)
+            items.addAll(Item.commonItems);
+        else if(chance >= 10 && chance <= 18)
+            items.addAll(Item.uncommonItems);
+        else if(chance >= 18 && chance <= 25)
+            items.addAll(Item.rareItems);
+        else if(chance >= 25 && chance <= 30)
+            items.addAll(Item.supremeItems);
+        else if(chance >= 30 && chance <= 33)
+            items.addAll(Item.epicItems);
+        else if(chance >= 33 && chance <= 35)
+            items.addAll(Item.legendaryItems);
+        else if(chance >= 35 && chance <= 36)
+            items.addAll(Item.ancientItems);
+        else
+            items.addAll(Item.commonItems);
+        return getRandomItemFromList(items);
+    }
+    
+    public static Item getRandomItemFromList(ArrayList<Item> items) {
+        if(items.isEmpty()) {
+            return getRandomItemFromList(commonItems);
+        }
+        return items.get(new Random().nextInt(items.size()));
     }
     
     public static Item getRandomItem() {
@@ -107,7 +143,7 @@ public abstract class Item {
             else if(rand == 6)
                 list.addAll(legendaryItems);
             else if(rand == 7)
-                list.addAll(transcendentItems);
+                list.addAll(ancientItems);
             
             if(!list.isEmpty())
                 break;

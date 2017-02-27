@@ -13,7 +13,6 @@ import static com.honker.main.Main.mainChannel;
 import static com.honker.main.Main.sendMessage;
 import static com.honker.main.Variables.ENTITY_SIZE;
 import static com.honker.main.Variables.WINDOW_SIZE;
-import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.util.ArrayList;
 
@@ -161,10 +160,5 @@ public class Hero extends NPC {
     @Override
     public void destroy() {
         game.playersToRemove.add(game.findPlayer(this));
-    }
-    
-    @Override
-    public void draw(Graphics g) {
-        draw(g, x - ENTITY_SIZE / 2, y - ENTITY_SIZE / 2);
     }
 }

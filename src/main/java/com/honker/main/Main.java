@@ -15,7 +15,7 @@ import sx.blah.discord.handle.obj.IChannel;
 import sx.blah.discord.handle.obj.IVoiceChannel;
 import sx.blah.discord.util.RateLimitException;
 
-public class Main {
+public class Main implements Runnable {
     
     public static final String COMMAND_SYMBOL = "!";
     public static String BOT_TOKEN, TEXT_CHANNEL_ID, GUILD_ID, FILES_PATH;
@@ -26,13 +26,49 @@ public class Main {
     
     public static IChannel mainChannel;
     
-    public static void sendFile(IChannel chan, String message, File file){
+    public static String message = "";
+    
+    @Override
+    public void run() {
+        while(true) {
+            flushMessages();
+            try {
+                Thread.sleep(2500);
+            } catch (InterruptedException ex) {
+                ex.printStackTrace();
+            }
+        }
+    }
+    
+    public static void flushMessages() {
+        if(message.equals("")) {
+            return;
+        }
+        
         start:
         try {
-            chan.sendFile(message, file);
+            mainChannel.sendMessage(message);
         } catch(RateLimitException ex) {
             try {
                 Thread.sleep(3000);
+            } catch (InterruptedException ex1) {
+                ex1.printStackTrace();
+            }
+            break start;
+        } catch(Exception ex) {
+            ex.printStackTrace();
+        }
+        message = "";
+    }
+    
+    public static void sendFile(IChannel chan, String message, File file){
+        start:
+        try {
+            flushMessages();
+            chan.sendFile(message, file);
+        } catch(RateLimitException ex) {
+            try {
+                Thread.sleep(5000);
             } catch (InterruptedException ex1) {
                 ex1.printStackTrace();
             }
@@ -49,10 +85,11 @@ public class Main {
     public static void sendFile(IChannel chan, String message, InputStream stream){
         start:
         try {
+            flushMessages();
             chan.sendFile(message, false, stream, "Image.png");
         } catch(RateLimitException ex) {
             try {
-                Thread.sleep(3000);
+                Thread.sleep(5000);
             } catch (InterruptedException ex1) {
                 ex1.printStackTrace();
             }
@@ -63,19 +100,7 @@ public class Main {
     }
     
     public static void sendMessage(IChannel chan, String msg){
-        start:
-        try {
-            chan.sendMessage(msg);
-        } catch(RateLimitException ex) {
-            try {
-                Thread.sleep(3000);
-            } catch (InterruptedException ex1) {
-                ex1.printStackTrace();
-            }
-            break start;
-        } catch(Exception ex) {
-            ex.printStackTrace();
-        }
+        message += msg + "\n\n";
     }
     
     public static void restartLater() {
@@ -101,6 +126,8 @@ public class Main {
             game.updatePlayers();
             game.start();
 
+            new Thread(new Main()).start();
+            
             ready = true;
         }
     }

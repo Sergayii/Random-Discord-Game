@@ -2,6 +2,7 @@ package com.honker.game.main;
 
 import com.honker.game.entities.living.Hero;
 import com.honker.game.entities.living.NPC;
+import com.honker.game.map.Map;
 import com.honker.game.menus.Battle;
 import com.honker.game.menus.Menu;
 import com.honker.game.menus.PVEBattle;
@@ -115,8 +116,10 @@ public class Player {
         }
         
         Image bg = null;
-        if(player.location.equals(game.locations.get(0))) {
+        if(player.map.type == Map.TYPE_STONE) {
             bg = game.img.STONE_BACKGROUND;
+        } else if(player.map.type == Map.TYPE_FOREST) {
+            bg = game.img.FOREST_BACKGROUND;
         }
         
         sendMessage(mainChannel, user.mention() + " started battle with " + entity.name);

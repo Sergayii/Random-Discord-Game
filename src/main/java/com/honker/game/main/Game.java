@@ -7,6 +7,7 @@ import com.honker.game.entities.living.NPC;
 import com.honker.game.entities.living.Hero;
 import com.honker.game.entities.living.NPCLayout;
 import com.honker.game.entities.misc.Spawn;
+import com.honker.game.items.Armor;
 import com.honker.game.items.Potion;
 import com.honker.game.items.Weapon;
 import com.honker.game.map.Location;
@@ -27,7 +28,6 @@ import java.io.ByteArrayOutputStream;
 import java.util.List;
 import java.util.Random;
 import sx.blah.discord.handle.obj.IUser;
-import static com.honker.main.Main.sendFile;
 import static com.honker.main.Main.sendFile;
 
 public class Game {
@@ -58,8 +58,12 @@ public class Game {
         player.player.addToInventory(Potion.DEBUG_POTION);
         player.player.addToInventory(Potion.DEBUG_POTION);
         player.player.addToInventory(Potion.DEBUG_POTION);
-        player.player.addToInventory(Potion.DEBUG_POTION);
-        player.player.addToInventory(Potion.DEBUG_POTION);
+//        player.player.addToInventory(Potion.DEBUG_POTION);
+//        player.player.addToInventory(Potion.DEBUG_POTION);
+        player.player.addToInventory(Armor.DEBUG_HEAD);
+        player.player.addToInventory(Armor.DEBUG_BODY);
+        player.player.addToInventory(Armor.DEBUG_ARMS);
+        player.player.addToInventory(Armor.DEBUG_LEGS);
         return player;
     }
     
@@ -86,10 +90,14 @@ public class Game {
         playersToRemove.clear();
     }
     
-    public void turn(Location location, Map map) {
+    public void removeEntities(Location location, Map map) {
         removePlayers();
         map.removeEntities();
         map.removeNPCs();
+    }
+    
+    public void turn(Location location, Map map) {
+        removeEntities(location, map);
         
         for(Player player : players) {
             player.player.move();

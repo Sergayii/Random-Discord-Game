@@ -2,6 +2,7 @@ package com.honker.game.entities.living;
 
 import com.honker.game.entities.Entity;
 import com.honker.game.entities.blocks.DroppedItem;
+import com.honker.game.items.Armor;
 import com.honker.game.items.Item;
 import com.honker.game.items.Weapon;
 import com.honker.game.main.Player;
@@ -12,6 +13,7 @@ import static com.honker.main.Main.game;
 import static com.honker.main.Main.mainChannel;
 import static com.honker.main.Main.sendMessage;
 import static com.honker.main.Variables.ENTITY_SIZE;
+import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Rectangle;
 import java.util.ArrayList;
@@ -26,9 +28,10 @@ public abstract class NPC extends Entity {
     public int exp = 0, expUntilNextLevel = 100, level;
     public int maxInventorySize = 20;
     
-    public Weapon weapon;
+    public ArrayList<Armor> armors = new ArrayList<Armor>();
+    public Weapon weapon = Weapon.DEFAULT;
     public ArrayList<Item> inventory = new ArrayList<Item>();
-    
+
     public String name;
     
     public int getDamage() {
@@ -83,7 +86,8 @@ public abstract class NPC extends Entity {
     }
     
     public void addToInventory(Item item) {
-        if(item != null && !item.equals(Weapon.DEFAULT)) {
+        if(item != null && !item.equals(Weapon.DEFAULT) && !item.equals(Armor.DEFAULT_HEAD) && !item.equals(Armor.DEFAULT_BODY) &&
+           !item.equals(Armor.DEFAULT_LEGS) && !item.equals(Armor.DEFAULT_ARMS)) {
             inventory.add(item);
         }
     }
@@ -94,8 +98,13 @@ public abstract class NPC extends Entity {
         if(weapon == null) {
             inventoryString += "Current weapon: None\n\n";
         } else {
-            inventoryString += "Current weapon: " + weapon.name + "\n\n";
+            inventoryString += "Current weapon: " + weapon.name + "\n";
         }
+        
+        inventoryString += "Head armor: " + armors.get(0).name + "\n";
+        inventoryString += "Body armor: " + armors.get(1).name + "\n";
+        inventoryString += "Arms armor: " + armors.get(2).name + "\n";
+        inventoryString += "Legs armor: " + armors.get(3).name + "\n\n";
         
         inventoryString += "Inventory:\n";
         
@@ -144,6 +153,21 @@ public abstract class NPC extends Entity {
             addToInventory(itemUnequipped);
             statsCheck();
             return 1;
+        } else if(armors.contains((Armor)item)) {
+            if(item.equals(Armor.DEFAULT_HEAD) || item.equals(Armor.DEFAULT_BODY) ||
+               item.equals(Armor.DEFAULT_ARMS) || item.equals(Armor.DEFAULT_LEGS)) {
+                return 0;
+            }
+            Armor armor = armors.get(armors.indexOf((Armor)item));
+            equipSTR -= armor.STR;
+            equipAG -= armor.AG;
+            equipDEF -= armor.DEF;
+            equipSPD -= armor.SPD;
+            itemUnequipped = armor;
+            Armor.setDefault(this, armor.slot);
+            addToInventory(itemUnequipped);
+            statsCheck();
+            return 1;
         }
         
         return 0;
@@ -153,18 +177,42 @@ public abstract class NPC extends Entity {
         if(item instanceof Weapon) {
             Weapon equippedWeapon = (Weapon)item;
             Weapon oldWeapon = weapon;
+            equipSTR -= weapon.STR;
+            equipAG -= weapon.AG;
+            equipDEF -= weapon.DEF;
+            equipSPD -= weapon.SPD;
             setWeapon(equippedWeapon);
             inventory.remove(inventory.indexOf(item));
             equipSTR += weapon.STR;
             equipAG += weapon.AG;
             equipDEF += weapon.DEF;
             equipSPD += weapon.SPD;
-            statsCheck();
             addToInventory(oldWeapon);
+            statsCheck();
+            return true;
+        } else if(item instanceof Armor) {
+            Armor equippedArmor = (Armor)item;
+            Armor oldArmor = Armor.getArmorBySlot(this, equippedArmor.slot);
+            equipSTR -= oldArmor.STR;
+            equipAG -= oldArmor.AG;
+            equipDEF -= oldArmor.DEF;
+            equipSPD -= oldArmor.SPD;
+            setArmor(equippedArmor);
+            inventory.remove(inventory.indexOf(item));
+            equipSTR += equippedArmor.STR;
+            equipAG += equippedArmor.AG;
+            equipDEF += equippedArmor.DEF;
+            equipSPD += equippedArmor.SPD;
+            addToInventory(oldArmor);
+            statsCheck();
             return true;
         }
         
         return false;
+    }
+    
+    public void setArmor(Armor armor) {
+        armor.setOwner(this);
     }
     
     public void setWeapon(Weapon weapon) {
@@ -189,19 +237,19 @@ public abstract class NPC extends Entity {
     }
     
     public void expCheck() {
-        if(exp > expUntilNextLevel) {
+        if(exp >= expUntilNextLevel) {
             exp = 0;
             level++;
             
             int statUpgraded = new Random().nextInt(4) + 1;
             if(statUpgraded == 1) {
-                STR++;
+                statsSTR++;
             } else if(statUpgraded == 2) {
-                AG++;
+                statsAG++;
             } else if(statUpgraded == 3) {
-                DEF++;
+                statsDEF++;
             } else if(statUpgraded == 4) {
-                SPD++;
+                statsSPD++;
             }
             
             statsCheck();
@@ -243,10 +291,10 @@ public abstract class NPC extends Entity {
         }
     }
     
-    private Player findPlayer(Rectangle rect) {
+    public Player findPlayer(Rectangle rect) {
         for(Player player : game.players) {
             if(player.player.location.equals(location) && player.player.map.equals(map)) {
-                if(player.player.intersects(rect)) {
+                if(rect.intersects(player.player)) {
                     return player;
                 }
             }
@@ -329,11 +377,29 @@ public abstract class NPC extends Entity {
         left = right = up = down = false;
     }
     
+    @Override
+    public void draw(Graphics g, int x, int y) {
+        g.drawImage(sprite, x, y, null);
+        g.drawImage(weapon.sprite, x, y, null);
+        for(Armor armor : armors) {
+            g.drawImage(armor.sprite, x, y, null);
+        }
+    }
+    
     public NPC(int x, int y, Image image, Location location, Map map, int hp, String name, int level, boolean friendly) {
         super(x, y, image, location, map, hp);
         this.level = level;
         this.name = name;
         this.friendly = friendly;
+        weapon.setOwner(this);
+        armors.add(Armor.DEFAULT_HEAD);
+        armors.get(0).setOwner(this);
+        armors.add(Armor.DEFAULT_BODY);
+        armors.get(1).setOwner(this);
+        armors.add(Armor.DEFAULT_ARMS);
+        armors.get(2).setOwner(this);
+        armors.add(Armor.DEFAULT_LEGS);
+        armors.get(3).setOwner(this);
         expCheck();
         hpCheck();
     }

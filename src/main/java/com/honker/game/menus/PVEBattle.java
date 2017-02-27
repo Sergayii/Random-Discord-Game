@@ -2,11 +2,11 @@ package com.honker.game.menus;
 
 import com.honker.game.entities.living.Hero;
 import com.honker.game.entities.living.NPC;
+import com.honker.game.items.Armor;
 import com.honker.game.items.Item;
 import com.honker.game.main.Player;
 import static com.honker.main.Main.game;
 import static com.honker.main.Main.mainChannel;
-import static com.honker.main.Main.sendFile;
 import static com.honker.main.Main.sendMessage;
 import static com.honker.main.Variables.WINDOW_SIZE;
 import java.awt.Graphics;
@@ -17,6 +17,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.Random;
 import javax.imageio.ImageIO;
+import static com.honker.main.Main.sendFile;
 
 public class PVEBattle extends Battle {
     
@@ -56,10 +57,8 @@ public class PVEBattle extends Battle {
     }
     
     @Override
-    public void sendMenu(String response, NPC npc) {
+    public void sendMenu(NPC npc) {
         if(menu == 1) {
-            sendFightersStats();
-
             BufferedImage image = new BufferedImage(WINDOW_SIZE, WINDOW_SIZE, BufferedImage.TYPE_INT_RGB);
             Graphics g = image.createGraphics();
 
@@ -69,9 +68,25 @@ public class PVEBattle extends Battle {
                 Image sprite = fighter2.sprite;
                 Image scaledSprite = sprite.getScaledInstance(sprite.getWidth(null) * 10, sprite.getHeight(null) * 10, Image.SCALE_DEFAULT);
                 g.drawImage(scaledSprite, WINDOW_SIZE / 2 - scaledSprite.getWidth(null) / 2, WINDOW_SIZE / 2 - scaledSprite.getHeight(null) / 2 + 100, null);
+                for(Armor armor : fighter2.armors) {
+                    sprite = armor.sprite;
+                    scaledSprite = sprite.getScaledInstance(sprite.getWidth(null) * 10, sprite.getHeight(null) * 10, Image.SCALE_DEFAULT);
+                    g.drawImage(scaledSprite, WINDOW_SIZE / 2 - scaledSprite.getWidth(null) / 2, WINDOW_SIZE / 2 - scaledSprite.getHeight(null) / 2 + 100, null);
+                }
+                sprite = fighter2.weapon.sprite;
+                scaledSprite = sprite.getScaledInstance(sprite.getWidth(null) * 10, sprite.getHeight(null) * 10, Image.SCALE_DEFAULT);
+                g.drawImage(scaledSprite, WINDOW_SIZE / 2 - scaledSprite.getWidth(null) / 2, WINDOW_SIZE / 2 - scaledSprite.getHeight(null) / 2 + 100, null);
             } else if(npc.equals(fighter2)) {
                 Image sprite = fighter1.sprite;
                 Image scaledSprite = sprite.getScaledInstance(sprite.getWidth(null) * 10, sprite.getHeight(null) * 10, Image.SCALE_DEFAULT);
+                g.drawImage(scaledSprite, WINDOW_SIZE / 2 - scaledSprite.getWidth(null) / 2, WINDOW_SIZE / 2 - scaledSprite.getHeight(null) / 2 + 100, null);
+                for(Armor armor : fighter1.armors) {
+                    sprite = armor.sprite;
+                    scaledSprite = sprite.getScaledInstance(sprite.getWidth(null) * 10, sprite.getHeight(null) * 10, Image.SCALE_DEFAULT);
+                    g.drawImage(scaledSprite, WINDOW_SIZE / 2 - scaledSprite.getWidth(null) / 2, WINDOW_SIZE / 2 - scaledSprite.getHeight(null) / 2 + 100, null);
+                }
+                sprite = fighter1.weapon.sprite;
+                scaledSprite = sprite.getScaledInstance(sprite.getWidth(null) * 10, sprite.getHeight(null) * 10, Image.SCALE_DEFAULT);
                 g.drawImage(scaledSprite, WINDOW_SIZE / 2 - scaledSprite.getWidth(null) / 2, WINDOW_SIZE / 2 - scaledSprite.getHeight(null) / 2 + 100, null);
             }
 
@@ -83,7 +98,14 @@ public class PVEBattle extends Battle {
             }
 
             try {
-                sendFile(mainChannel, response, new ByteArrayInputStream(output.toByteArray()));
+                sendFile(mainChannel, 
+                    fighter1.name + "'s status:\n" +
+                    "HP: " + fighter1.hp + "\n" +
+                    "Level: " + fighter1.level + "\n\n" +
+                    fighter2.name + "'s status:\n" +
+                    "HP: " + fighter2.hp + "\n" +
+                    "Level: " + fighter2.level + "\n",
+                new ByteArrayInputStream(output.toByteArray()));
             } catch (Exception ex) {
                 ex.printStackTrace();
             }

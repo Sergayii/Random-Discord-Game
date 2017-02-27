@@ -1,5 +1,6 @@
 package com.honker.game.entities;
 
+import com.honker.game.entities.living.Boss;
 import com.honker.game.entities.living.Enemy;
 import com.honker.game.entities.living.Hero;
 import com.honker.game.map.Location;
@@ -32,6 +33,8 @@ public abstract class Entity extends Rectangle{
                 Map.dropLoot((Enemy)this);
             } else if(this instanceof Hero) {
                 Map.dropLoot((Hero)this);
+            } else if(this instanceof Boss) {
+                Map.dropLoot((Boss)this);
             }
         }
     }

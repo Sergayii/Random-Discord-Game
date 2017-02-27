@@ -34,8 +34,7 @@ public class InventoryMenu extends Menu {
                 sendMenu();
             } else if(choice == 7) {
                 player.removeMenu();
-                sendMessage(mainChannel, player.user.mention() + " , you left the inventory screen");
-                game.sendMap("Let's look at the map!", player.player.location, player.player.map);
+                game.sendMap("Let's look at the map now, " + player.user.mention() + " !", player.player.location, player.player.map);
             }
         } else if(menu == 2) {
             ArrayList<Item> equippableItems = new ArrayList<Item>();
@@ -57,20 +56,34 @@ public class InventoryMenu extends Menu {
                 sendMenu();
             }
         } else if(menu == 3) {
+            int unequipped = 0;
+            boolean sendMenu = true;
             if(choice == 1) {
-                int unequipped = player.player.unequip(player.player.weapon);
-                if(unequipped == 1) {
-                    sendMessage(mainChannel, player.user.mention() + " , item unequipped sucessfully!");
-                } else if(unequipped == 0) {
-                    sendMessage(mainChannel, player.user.mention() + " , you can't unequip that!");
-                } else if(unequipped == -1) {
-                    sendMessage(mainChannel, player.user.mention() + " , your inventory is full!");
-                }
-                sendMenu();
+                unequipped = player.player.unequip(player.player.weapon);
             } else if(choice == 2) {
+                unequipped = player.player.unequip(player.player.armors.get(0));
+            } else if(choice == 3) {
+                unequipped = player.player.unequip(player.player.armors.get(1));
+            } else if(choice == 4) {
+                unequipped = player.player.unequip(player.player.armors.get(2));
+            } else if(choice == 5) {
+                unequipped = player.player.unequip(player.player.armors.get(3));
+            } else if(choice == 6) {
                 menu = 1;
-                sendMenu();
+                unequipped = 2;
+            } else {
+                unequipped = 2;
+                sendMenu = false;
             }
+            if(unequipped == 1) {
+                sendMessage(mainChannel, player.user.mention() + " , item unequipped sucessfully!");
+            } else if(unequipped == 0) {
+                sendMessage(mainChannel, player.user.mention() + " , you can't unequip that!");
+            } else if(unequipped == -1) {
+                sendMessage(mainChannel, player.user.mention() + " , your inventory is full!");
+            }
+            if(sendMenu)
+                sendMenu();
         } else if(menu == 4) {
             ArrayList<Item> usableItems = new ArrayList<Item>();
             for(Item item : player.player.inventory) {
@@ -143,7 +156,7 @@ public class InventoryMenu extends Menu {
             }
             sendMessage(mainChannel, "Variants:\n" + inventoryString);
         } else if(menu == 3) {
-            sendMessage(mainChannel, "Variants:\n1. Weapon\n2. Back");
+            sendMessage(mainChannel, "Variants:\n1. Weapon\n2. Head armor\n3. Body armor\n4. Arms armor\n5. Legs armor\n6. Back");
         } else if(menu == 4) {
             String inventoryString = new String();
         

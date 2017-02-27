@@ -195,7 +195,8 @@ public class MessageListener {
 
                         location = player.player.location;
                         map = player.player.map;
-                        game.sendMap("You are standing here:", location, map);
+                        if(!player.player.action)
+                            game.sendMap("You are standing here:", location, map);
                     } else if(cmd.length == 2) {
                         int turnCount = 1;
                         try {

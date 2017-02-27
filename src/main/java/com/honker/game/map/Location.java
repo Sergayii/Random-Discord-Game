@@ -2,6 +2,7 @@ package com.honker.game.map;
 
 import com.honker.game.entities.blocks.Block;
 import com.honker.game.entities.blocks.Floor;
+import com.honker.game.entities.living.Boss;
 import com.honker.game.entities.living.Enemy;
 import com.honker.game.entities.living.NPCLayout;
 import com.honker.game.entities.misc.Enter;
@@ -97,6 +98,9 @@ public class Location {
                         switch(col){
                             case '*':
                                 new Enemy(NPCLayout.DEBUG_ENEMY, x, y, this, map);
+                                break;
+                            case 'B':
+                                new Boss(NPCLayout.BOSS1, x, y, this, map);
                                 break;
                         }
                         x += ENTITY_SIZE;

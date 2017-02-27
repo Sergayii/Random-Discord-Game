@@ -20,17 +20,6 @@ public abstract class Battle extends Menu {
     public NPC fighter1;
     public NPC fighter2;
     
-    public void sendFightersStats() {
-        sendMessage(mainChannel,
-                fighter1.name + "'s status:\n" +
-                "HP: " + fighter1.hp + "\n" +
-                "Level: " + fighter1.level + "\n\n" +
-                fighter2.name + "'s status:\n" +
-                "HP: " + fighter2.hp + "\n" +
-                "Level: " + fighter2.level + "\n"
-        );
-    }
-    
     public void turn() {
         if(!(fighter1 instanceof Hero)) {
             if(menu == 1) {
@@ -76,7 +65,7 @@ public abstract class Battle extends Menu {
                     if(fighter2.hp <= 0) {
                         stop(fighter1.name + " won!");
                         fighter1.addExp(fighter2.getExpGained());
-                        game.turn(fighter1.location, fighter1.map);
+                        game.removeEntities(fighter1.location, fighter1.map);
                         game.sendMap("Let's look at the battlefield now!", fighter1.location, fighter1.map);
                         return;
                     }
@@ -100,7 +89,7 @@ public abstract class Battle extends Menu {
                     if(fighter1.hp <= 0) {
                         stop(fighter2.name + " won!");
                         fighter2.addExp(fighter1.getExpGained());
-                        game.turn(fighter1.location, fighter1.map);
+                        game.removeEntities(fighter1.location, fighter1.map);
                         game.sendMap("Let's look at the battlefield now!", fighter1.location, fighter1.map);
                         return;
                     }
@@ -200,7 +189,6 @@ public abstract class Battle extends Menu {
             if(choice > 0 && choice <= usableItems.size()) {
                 boolean used = player.player.use(usableItems.get(choice - 1));
                 if(used) {
-                    sendMessage(mainChannel, player.player.name + ", item used sucessfully!");
                     if(player.player.equals(fighter1)) {
                         turn1 = true;
                         turn2 = false;

@@ -2,14 +2,12 @@ package com.honker.game.entities.living;
 
 import com.honker.game.entities.Entity;
 import com.honker.game.entities.blocks.DroppedItem;
-import com.honker.game.items.Weapon;
 import com.honker.game.main.Player;
 import com.honker.game.map.Location;
 import com.honker.game.map.Map;
 import static com.honker.main.Main.game;
 import static com.honker.main.Variables.ENTITY_SIZE;
 import static com.honker.main.Variables.WINDOW_SIZE;
-import java.awt.Image;
 import java.awt.Rectangle;
 import java.util.Random;
 
@@ -18,12 +16,6 @@ public class Enemy extends NPC {
     public Enemy(NPCLayout layout, int x, int y, Location location, Map map) {
         super(x, y, layout.sprite, location, map, layout.hp, layout.name, layout.level, layout.friendly);
         setWeapon(layout.weapon);
-        map.npcs.add(this);
-    }
-    
-    public Enemy(int x, int y, Image image, Location location, Map map, int hp, Weapon weapon, String name, int level, boolean friendly) {
-        super(x, y, image, location, map, hp, name, level, friendly);
-        setWeapon(weapon);
         map.npcs.add(this);
     }
     

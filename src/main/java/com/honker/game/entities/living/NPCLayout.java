@@ -6,7 +6,9 @@ import java.awt.Image;
 
 public class NPCLayout {
 
-    public static NPCLayout DEBUG_ENEMY = new NPCLayout(game.img.ENEMY_SPRITE, 20, Weapon.BEGINNER_SWORD, "Debug enemy", 100, false);
+    public static final NPCLayout BOSS1 = new NPCLayout(game.img.BOSS1, 100, Weapon.BOSS_WEAPON1, "Debug boss", 20, false);
+    
+    public static final NPCLayout DEBUG_ENEMY = new NPCLayout(game.img.ENEMY_SPRITE, 20, Weapon.BEGINNER_SWORD, "Debug enemy", 1, false);
     
     public Image sprite;
     public boolean friendly;
