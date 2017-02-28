@@ -94,7 +94,11 @@ public class Player {
         }
         
         Image bg = null;
-        if(player.location.equals(game.locations.get(0))) {
+        if(player.map.type == Map.TYPE_STONE) {
+            bg = game.img.STONE_BACKGROUND;
+        } else if(player.map.type == Map.TYPE_FOREST) {
+            bg = game.img.FOREST_BACKGROUND;
+        } else {
             bg = game.img.STONE_BACKGROUND;
         }
         

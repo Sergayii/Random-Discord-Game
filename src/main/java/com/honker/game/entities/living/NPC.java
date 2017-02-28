@@ -226,7 +226,7 @@ public abstract class NPC extends Entity {
     
     public int getExpGained() {
         int expScale = 10;
-        return expScale * (level - 1) + new Random().nextInt(expScale * level - expScale * (level - 1)) + 1;
+        return expScale * level - (new Random().nextInt(expScale / 2) + expScale / 2);
     }
     
     public void addExp(int count) {
@@ -341,11 +341,15 @@ public abstract class NPC extends Entity {
     }
     
     public void attack(Player player) {
-        if(action)
+        if(action || player.player.action)
             return;
         
         Image bg = null;
-        if(location.equals(game.locations.get(0))) {
+        if(map.type == Map.TYPE_STONE) {
+            bg = game.img.STONE_BACKGROUND;
+        } else if(map.type == Map.TYPE_FOREST) {
+            bg = game.img.FOREST_BACKGROUND;
+        } else {
             bg = game.img.STONE_BACKGROUND;
         }
         

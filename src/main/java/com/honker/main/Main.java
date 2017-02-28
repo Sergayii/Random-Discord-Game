@@ -33,7 +33,7 @@ public class Main implements Runnable {
         while(true) {
             flushMessages();
             try {
-                Thread.sleep(2500);
+                Thread.sleep(5000);
             } catch (InterruptedException ex) {
                 ex.printStackTrace();
             }
@@ -45,34 +45,18 @@ public class Main implements Runnable {
             return;
         }
         
-        start:
         try {
             mainChannel.sendMessage(message);
-        } catch(RateLimitException ex) {
-            try {
-                Thread.sleep(3000);
-            } catch (InterruptedException ex1) {
-                ex1.printStackTrace();
-            }
-            break start;
+            message = "";
         } catch(Exception ex) {
             ex.printStackTrace();
         }
-        message = "";
     }
     
     public static void sendFile(IChannel chan, String message, File file){
-        start:
+        flushMessages();
         try {
-            flushMessages();
             chan.sendFile(message, file);
-        } catch(RateLimitException ex) {
-            try {
-                Thread.sleep(5000);
-            } catch (InterruptedException ex1) {
-                ex1.printStackTrace();
-            }
-            break start;
         } catch(Exception ex) {
             ex.printStackTrace();
         }
@@ -83,17 +67,9 @@ public class Main implements Runnable {
     }
     
     public static void sendFile(IChannel chan, String message, InputStream stream){
-        start:
+        flushMessages();
         try {
-            flushMessages();
             chan.sendFile(message, false, stream, "Image.png");
-        } catch(RateLimitException ex) {
-            try {
-                Thread.sleep(5000);
-            } catch (InterruptedException ex1) {
-                ex1.printStackTrace();
-            }
-            break start;
         } catch(Exception ex) {
             ex.printStackTrace();
         }

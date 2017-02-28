@@ -22,10 +22,10 @@ public class Armor extends Item {
     public static final String QUALITY_GODLY = "Godly";
     public static final String QUALITY_LEGENDARY = "Legendary";
     
-    public static final Armor DEBUG_HEAD = new Armor(game.img.EMPTY_SPRITE, "Debug helmet", "Armor for debug", SLOT_HEAD, 50, 50, 50, 50, Item.RARITY_DEV, false, QUALITY_NORMAL);
-    public static final Armor DEBUG_BODY = new Armor(game.img.EMPTY_SPRITE, "Debug body armor", "Armor for debug", SLOT_BODY, 50, 50, 50, 50, Item.RARITY_DEV, false, QUALITY_NORMAL);
-    public static final Armor DEBUG_ARMS = new Armor(game.img.EMPTY_SPRITE, "Debug gloves", "Armor for debug", SLOT_ARMS, 50, 50, 50, 50, Item.RARITY_DEV, false, QUALITY_NORMAL);
-    public static final Armor DEBUG_LEGS = new Armor(game.img.EMPTY_SPRITE, "Debug greaves", "Armor for debug", SLOT_LEGS, 50, 50, 50, 50, Item.RARITY_DEV, false, QUALITY_NORMAL);
+    public static final Armor DEBUG_HEAD = new Armor(game.img.STEEL_HELMET_SPRITE, "Debug helmet", "Armor for debug", SLOT_HEAD, 50, 50, 50, 50, Item.RARITY_DEV, false, QUALITY_NORMAL);
+    public static final Armor DEBUG_BODY = new Armor(game.img.STEEL_ARMOR_SPRITE, "Debug body armor", "Armor for debug", SLOT_BODY, 50, 50, 50, 50, Item.RARITY_DEV, false, QUALITY_NORMAL);
+    public static final Armor DEBUG_ARMS = new Armor(game.img.STEEL_GLOVES_SPRITE, "Debug gloves", "Armor for debug", SLOT_ARMS, 50, 50, 50, 50, Item.RARITY_DEV, false, QUALITY_NORMAL);
+    public static final Armor DEBUG_LEGS = new Armor(game.img.STEEL_GREAVES_SPRITE, "Debug greaves", "Armor for debug", SLOT_LEGS, 50, 50, 50, 50, Item.RARITY_DEV, false, QUALITY_NORMAL);
     public static final Armor DEFAULT_HEAD = new Armor(game.img.EMPTY_SPRITE, "None", "No armor", SLOT_HEAD, 0, 0, 0, 0, Item.RARITY_DEV, false, QUALITY_NORMAL);
     public static final Armor DEFAULT_BODY = new Armor(game.img.EMPTY_SPRITE, "None", "No armor", SLOT_BODY, 0, 0, 0, 0, Item.RARITY_DEV, false, QUALITY_NORMAL);
     public static final Armor DEFAULT_ARMS = new Armor(game.img.EMPTY_SPRITE, "None", "No armor", SLOT_ARMS, 0, 0, 0, 0, Item.RARITY_DEV, false, QUALITY_NORMAL);

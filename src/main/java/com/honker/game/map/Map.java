@@ -7,27 +7,19 @@ import com.honker.game.entities.living.Boss;
 import com.honker.game.entities.living.Enemy;
 import com.honker.game.entities.living.Hero;
 import com.honker.game.entities.living.NPC;
+import com.honker.game.entities.misc.BossSpawn;
 import com.honker.game.entities.misc.Enter;
 import com.honker.game.entities.misc.Exit;
-import com.honker.game.entities.misc.Spawn;
+import com.honker.game.entities.misc.PlayerSpawn;
 import com.honker.game.items.Item;
-import static com.honker.game.items.Weapon.QUALITY_AWFUL;
-import static com.honker.game.items.Weapon.QUALITY_GODLY;
-import static com.honker.game.items.Weapon.QUALITY_GOOD;
-import static com.honker.game.items.Weapon.QUALITY_LEGENDARY;
-import static com.honker.game.items.Weapon.QUALITY_NORMAL;
-import static com.honker.game.items.Weapon.QUALITY_PARAGON;
-import static com.honker.game.items.Weapon.QUALITY_POOR;
-import static com.honker.game.items.Weapon.QUALITY_SHODDY;
-import static com.honker.game.items.Weapon.QUALITY_SUPERIOR;
 import static com.honker.main.Variables.WINDOW_SIZE;
 import java.util.ArrayList;
 import java.util.Random;
 
 public class Map {
     
-    public static int TYPE_STONE = 1;
-    public static int TYPE_FOREST = 2;
+    public static final int TYPE_STONE = 1;
+    public static final int TYPE_FOREST = 2;
     
     public static Map mapUpLeft = new Map(
        new String[] {
@@ -304,7 +296,8 @@ public class Map {
     public ArrayList<Floor> floors = new ArrayList<Floor>();
     public ArrayList<Entity> entitiesToRemove = new ArrayList<Entity>();
     public ArrayList<Entity> entities = new ArrayList<Entity>();
-    public ArrayList<Spawn> spawners = new ArrayList<Spawn>();
+    public ArrayList<BossSpawn> bossSpawners = new ArrayList<BossSpawn>();
+    public ArrayList<PlayerSpawn> spawners = new ArrayList<PlayerSpawn>();
     
     public Map(String[] layer1, String[] layer2, String[] layer3, int type) {
         this.layer1 = layer1;
@@ -325,6 +318,15 @@ public class Map {
             npcs.remove(npc);
         }
         npcsToRemove.clear();
+    }
+    
+    public boolean containsBosses() {
+        for(NPC npc : npcs) {
+            if(npc instanceof Boss) {
+                return true;
+            }
+        }
+        return false;
     }
     
     public static void dropLoot(Hero hero) {

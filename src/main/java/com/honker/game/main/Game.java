@@ -6,7 +6,8 @@ import com.honker.game.entities.living.Enemy;
 import com.honker.game.entities.living.NPC;
 import com.honker.game.entities.living.Hero;
 import com.honker.game.entities.living.NPCLayout;
-import com.honker.game.entities.misc.Spawn;
+import com.honker.game.entities.misc.BossSpawn;
+import com.honker.game.entities.misc.PlayerSpawn;
 import com.honker.game.items.Armor;
 import com.honker.game.items.Potion;
 import com.honker.game.items.Weapon;
@@ -48,7 +49,7 @@ public class Game {
     
     public Player createPlayer(IUser user) {
         int x = 0, y = 0;
-        Spawn spawn = locations.get(0).getWithSpawners().spawners.get(new Random().nextInt(locations.get(0).getWithSpawners().spawners.size()));
+        PlayerSpawn spawn = locations.get(0).getWithSpawners().spawners.get(new Random().nextInt(locations.get(0).getWithSpawners().spawners.size()));
         x = spawn.x;
         y = spawn.y;
         
@@ -83,6 +84,39 @@ public class Game {
         return null;
     }
     
+    public void spawnNPCs() {
+        for(Location loc : locations) {
+            for(Map[] row : loc.rooms) {
+                for(Map col : row) {
+                    boolean noPlayers = true;
+                    for(Player player : players) {
+                        if(player.player.location.equals(loc) && player.player.map.equals(col)) {
+                            noPlayers = false;
+                            break;
+                        }
+                    }
+                    
+                    if(noPlayers && col.npcs.isEmpty()) {
+                        int count = new Random().nextInt(5) + 1;
+                        for(int a = 0; a < count; a++) {
+                            int[] randomPos = col.getRandomPosition();
+                            new Enemy(NPCLayout.DEBUG_ENEMY, randomPos[0], randomPos[1], loc, col);
+                        }
+                    }
+                    
+                    if(noPlayers && !col.containsBosses()) {
+                        for(BossSpawn spawn : col.bossSpawners) {
+                            int chance = new Random().nextInt(10) + 1;
+                            if(chance == 1) {
+                                spawn.spawn();
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
     public void removePlayers() {
         for(Player player : playersToRemove) {
             players.remove(player);
@@ -94,6 +128,16 @@ public class Game {
         removePlayers();
         map.removeEntities();
         map.removeNPCs();
+    }
+    
+    public void turnAll() {
+        for(Location location : locations) {
+            for(Map[] row : location.rooms) {
+                for(Map col : row) {
+                    turn(location, col);
+                }
+            }
+        }
     }
     
     public void turn(Location location, Map map) {
@@ -116,27 +160,11 @@ public class Game {
         map.removeEntities();
         map.removeNPCs();
         
-        for(Location loc : locations) {
-            for(Map[] row : loc.rooms) {
-                for(Map col : row) {
-                    boolean noPlayers = true;
-                    for(Player player : players) {
-                        if(player.player.location.equals(loc) && player.player.map.equals(col)) {
-                            noPlayers = false;
-                            break;
-                        }
-                    }
-                    
-                    if(noPlayers && col.npcs.isEmpty()) {
-                        int count = new Random().nextInt(5) + 1;
-                        for(int a = 0; a < count; a++) {
-                            int[] randomPos = col.getRandomPosition();
-                            new Enemy(NPCLayout.DEBUG_ENEMY, randomPos[0], randomPos[1], loc, col);
-                        }
-                    }
-                }
-            }
-        }
+        spawnNPCs();
+    }
+    
+    public void sendMap(Location location, Map map) {
+        sendMap("", location, map);
     }
     
     public void sendMap(String response, Location location, Map map) {
@@ -171,15 +199,12 @@ public class Game {
             ex.printStackTrace();
         }
         
-        try {
-            sendFile(mainChannel, response, new ByteArrayInputStream(output.toByteArray()));
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
+        sendFile(mainChannel, response, new ByteArrayInputStream(output.toByteArray()));
     }
     
     public void start() {
         sendMessage(mainChannel, "Game started!\nSend \"!join\" if you want to play!");
+        turnAll();
     }
     
     public void stop() {

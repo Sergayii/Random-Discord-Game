@@ -8,7 +8,6 @@ import com.honker.game.main.Player;
 import static com.honker.main.Main.game;
 import static com.honker.main.Main.mainChannel;
 import static com.honker.main.Main.sendMessage;
-import static com.honker.main.Variables.WINDOW_SIZE;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.image.BufferedImage;

@@ -5,9 +5,10 @@ import com.honker.game.entities.blocks.Floor;
 import com.honker.game.entities.living.Boss;
 import com.honker.game.entities.living.Enemy;
 import com.honker.game.entities.living.NPCLayout;
+import com.honker.game.entities.misc.BossSpawn;
 import com.honker.game.entities.misc.Enter;
 import com.honker.game.entities.misc.Exit;
-import com.honker.game.entities.misc.Spawn;
+import com.honker.game.entities.misc.PlayerSpawn;
 import static com.honker.main.Main.game;
 import static com.honker.main.Variables.ENTITY_SIZE;
 import java.awt.Image;
@@ -79,7 +80,7 @@ public class Location {
                                 new Block(x, y, img, this, map);
                                 break;
                             case 'P':
-                                new Spawn(x, y, this, map);
+                                new PlayerSpawn(x, y, this, map);
                                 break;
                             case '>':
                                 new Enter(x, y, this, map);
@@ -100,7 +101,7 @@ public class Location {
                                 new Enemy(NPCLayout.DEBUG_ENEMY, x, y, this, map);
                                 break;
                             case 'B':
-                                new Boss(NPCLayout.BOSS1, x, y, this, map);
+                                new BossSpawn(x, y, this, map, NPCLayout.BOSS1);
                                 break;
                         }
                         x += ENTITY_SIZE;
