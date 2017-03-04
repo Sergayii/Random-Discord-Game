@@ -3,24 +3,13 @@ package com.honker.game.items;
 import com.honker.game.entities.living.NPC;
 import static com.honker.main.Main.game;
 import java.awt.Image;
-import java.util.Random;
 
-public class Armor extends Item {
+public class Armor extends EquippableItem {
     
     public static final String SLOT_HEAD = "Head";
     public static final String SLOT_BODY = "Body";
     public static final String SLOT_ARMS = "Arms";
     public static final String SLOT_LEGS = "Legs";
-    
-    public static final String QUALITY_AWFUL = "Awful";
-    public static final String QUALITY_SHODDY = "Shoddy";
-    public static final String QUALITY_POOR = "Poor";
-    public static final String QUALITY_NORMAL = "Normal";
-    public static final String QUALITY_GOOD = "Good";
-    public static final String QUALITY_SUPERIOR = "Superior";
-    public static final String QUALITY_PARAGON = "Paragon";
-    public static final String QUALITY_GODLY = "Godly";
-    public static final String QUALITY_LEGENDARY = "Legendary";
     
     public static final Armor DEBUG_HEAD = new Armor(game.img.STEEL_HELMET_SPRITE, "Debug helmet", "Armor for debug", SLOT_HEAD, 50, 50, 50, 50, Item.RARITY_DEV, false, QUALITY_NORMAL);
     public static final Armor DEBUG_BODY = new Armor(game.img.STEEL_ARMOR_SPRITE, "Debug body armor", "Armor for debug", SLOT_BODY, 50, 50, 50, 50, Item.RARITY_DEV, false, QUALITY_NORMAL);
@@ -37,8 +26,7 @@ public class Armor extends Item {
     public static final Armor STEEL_GREAVES = new Armor(game.img.STEEL_GREAVES_SPRITE, "Steel greaves", "Greaves made out of steel", SLOT_LEGS, 5, 5, 3, 5, Item.RARITY_UNCOMMON, true, QUALITY_NORMAL);
     
     public NPC owner = null;
-    public String quality, slot;
-    public int STR, AG, DEF, SPD;
+    public String slot;
     
     public static Armor getArmorBySlot(NPC npc, String slot) {
         for(Armor armor : npc.armors) {
@@ -80,39 +68,8 @@ public class Armor extends Item {
     }
     
     public Armor(Image sprite, String name, String description, String slot, int STR, int AG, int DEF, int SPD, int rarity, boolean affectedByQuality, String forcedQuality) {
-        super(sprite, name, description, true, false, rarity);
+        super(sprite, name, description, STR, AG, DEF, SPD, rarity, affectedByQuality, forcedQuality);
         this.slot = slot;
-        
-        int chance = new Random().nextInt(50) + 1;
-        if(chance >= 1 && chance <= 10)
-            quality = QUALITY_AWFUL;
-        else if(chance >= 10 && chance <= 20)
-            quality = QUALITY_SHODDY;
-        else if(chance >= 20 && chance <= 30)
-            quality = QUALITY_POOR;
-        else if(chance >= 30 && chance <= 35)
-            quality = QUALITY_NORMAL;
-        else if(chance >= 35 && chance <= 40)
-            quality = QUALITY_GOOD;
-        else if(chance >= 40 && chance <= 44)
-            quality = QUALITY_SUPERIOR;
-        else if(chance >= 44 && chance <= 47)
-            quality = QUALITY_PARAGON;
-        else if(chance >= 47 && chance <= 49)
-            quality = QUALITY_GODLY;
-        else if(chance >= 49 && chance <= 50)
-            quality = QUALITY_LEGENDARY;
-        else
-            quality = QUALITY_NORMAL;
-        
-        if(!affectedByQuality) {
-            quality = forcedQuality;
-        }
-        
-        this.STR = STR;
-        this.AG = AG;
-        this.DEF = DEF;
-        this.SPD = SPD;
         
         switch(quality) {
             case QUALITY_AWFUL:
@@ -120,48 +77,56 @@ public class Armor extends Item {
                 this.AG = (int)(this.AG / 2);
                 this.DEF = (int)(this.DEF / 2);
                 this.SPD = (int)(this.SPD / 2);
+                removeStats(10);
                 break;
             case QUALITY_SHODDY:
                 this.STR = (int)(this.STR / 1.5);
                 this.AG = (int)(this.AG / 1.5);
                 this.DEF = (int)(this.DEF / 1.5);
                 this.SPD = (int)(this.SPD / 1.5);
+                removeStats(7);
                 break;
             case QUALITY_POOR:
                 this.STR = (int)(this.STR / 1.25);
                 this.AG = (int)(this.AG / 1.25);
                 this.DEF = (int)(this.DEF / 1.25);
                 this.SPD = (int)(this.SPD / 1.25);
+                removeStats(5);
                 break;
             case QUALITY_GOOD:
                 this.STR = (int)(this.STR * 1.25);
                 this.AG = (int)(this.AG * 1.25);
                 this.DEF = (int)(this.DEF * 1.25);
                 this.SPD = (int)(this.SPD * 1.25);
+                addStats(5);
                 break;
             case QUALITY_SUPERIOR:
                 this.STR = (int)(this.STR * 1.5);
                 this.AG = (int)(this.AG * 1.5);
                 this.DEF = (int)(this.DEF * 1.5);
                 this.SPD = (int)(this.SPD * 1.5);
+                addStats(10);
                 break;
             case QUALITY_PARAGON:
                 this.STR = (int)(this.STR * 2);
                 this.AG = (int)(this.AG * 2);
                 this.DEF = (int)(this.DEF * 2);
                 this.SPD = (int)(this.SPD * 2);
+                addStats(25);
                 break;
             case QUALITY_GODLY:
                 this.STR = (int)(this.STR * 3);
                 this.AG = (int)(this.AG * 3);
                 this.DEF = (int)(this.DEF * 3);
                 this.SPD = (int)(this.SPD * 3);
+                addStats(50);
                 break;
             case QUALITY_LEGENDARY:
                 this.STR = (int)(this.STR * 4);
                 this.AG = (int)(this.AG * 4);
                 this.DEF = (int)(this.DEF * 4);
                 this.SPD = (int)(this.SPD * 4);
+                addStats(100);
                 break;
         }
     }

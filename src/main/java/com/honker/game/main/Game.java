@@ -55,16 +55,16 @@ public class Game {
         
         Player player = new Player(user, new Hero(x, y, locations.get(0), locations.get(0).getWithSpawners(), 100, user.getName(), 1));
         players.add(player);
-        player.player.addToInventory(Weapon.DEBUG_SWORD);
-        player.player.addToInventory(Potion.DEBUG_POTION);
-        player.player.addToInventory(Potion.DEBUG_POTION);
-        player.player.addToInventory(Potion.DEBUG_POTION);
+//        player.player.addToInventory(Weapon.DEBUG_SWORD);
 //        player.player.addToInventory(Potion.DEBUG_POTION);
 //        player.player.addToInventory(Potion.DEBUG_POTION);
-        player.player.addToInventory(Armor.DEBUG_HEAD);
-        player.player.addToInventory(Armor.DEBUG_BODY);
-        player.player.addToInventory(Armor.DEBUG_ARMS);
-        player.player.addToInventory(Armor.DEBUG_LEGS);
+//        player.player.addToInventory(Potion.DEBUG_POTION);
+//        player.player.addToInventory(Potion.DEBUG_POTION);
+//        player.player.addToInventory(Potion.DEBUG_POTION);
+//        player.player.addToInventory(Armor.DEBUG_HEAD);
+//        player.player.addToInventory(Armor.DEBUG_BODY);
+//        player.player.addToInventory(Armor.DEBUG_ARMS);
+//        player.player.addToInventory(Armor.DEBUG_LEGS);
         return player;
     }
     

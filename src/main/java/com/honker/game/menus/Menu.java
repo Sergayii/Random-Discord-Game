@@ -23,7 +23,7 @@ public abstract class Menu {
         sendMenu("");
     }
     
-    public void choose(int choice){};
+    public void choose(int choice) {}
     
     public void drawBg(Graphics g) {
         g.clearRect(0, 0, WINDOW_SIZE, WINDOW_SIZE);

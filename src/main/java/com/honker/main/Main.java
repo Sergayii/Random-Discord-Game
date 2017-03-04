@@ -13,7 +13,6 @@ import sx.blah.discord.api.events.EventSubscriber;
 import sx.blah.discord.handle.impl.events.ReadyEvent;
 import sx.blah.discord.handle.obj.IChannel;
 import sx.blah.discord.handle.obj.IVoiceChannel;
-import sx.blah.discord.util.RateLimitException;
 
 public class Main implements Runnable {
     
@@ -41,7 +40,7 @@ public class Main implements Runnable {
     }
     
     public static void flushMessages() {
-        if(message.equals("")) {
+        if(message.isEmpty()) {
             return;
         }
         
@@ -76,7 +75,8 @@ public class Main implements Runnable {
     }
     
     public static void sendMessage(IChannel chan, String msg){
-        message += msg + "\n\n";
+        if(!message.endsWith(msg))
+            message += msg + "\n\n";
     }
     
     public static void restartLater() {

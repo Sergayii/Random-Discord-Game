@@ -7,7 +7,8 @@ public class Boss extends Enemy {
     
     @Override
     public int getExpGained() {
-        return super.getExpGained() * 10;
+        int expScale = 10;
+        return super.getExpGained() * expScale;
     }
     
     public Boss(NPCLayout layout, int x, int y, Location location, Map map) {

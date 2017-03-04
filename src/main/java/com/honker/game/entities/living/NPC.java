@@ -182,7 +182,8 @@ public abstract class NPC extends Entity {
             equipDEF -= weapon.DEF;
             equipSPD -= weapon.SPD;
             setWeapon(equippedWeapon);
-            inventory.remove(inventory.indexOf(item));
+            if(inventory.contains(item))
+                inventory.remove(inventory.indexOf(item));
             equipSTR += weapon.STR;
             equipAG += weapon.AG;
             equipDEF += weapon.DEF;
@@ -198,7 +199,8 @@ public abstract class NPC extends Entity {
             equipDEF -= oldArmor.DEF;
             equipSPD -= oldArmor.SPD;
             setArmor(equippedArmor);
-            inventory.remove(inventory.indexOf(item));
+            if(inventory.contains(item))
+                inventory.remove(inventory.indexOf(item));
             equipSTR += equippedArmor.STR;
             equipAG += equippedArmor.AG;
             equipDEF += equippedArmor.DEF;
@@ -226,7 +228,7 @@ public abstract class NPC extends Entity {
     
     public int getExpGained() {
         int expScale = 10;
-        return expScale * level - (new Random().nextInt(expScale / 2) + expScale / 2);
+        return expScale * level - new Random().nextInt(expScale * level / 2);
     }
     
     public void addExp(int count) {
@@ -395,7 +397,7 @@ public abstract class NPC extends Entity {
         this.level = level;
         this.name = name;
         this.friendly = friendly;
-        weapon.setOwner(this);
+        equip(weapon);
         armors.add(Armor.DEFAULT_HEAD);
         armors.get(0).setOwner(this);
         armors.add(Armor.DEFAULT_BODY);

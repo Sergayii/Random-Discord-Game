@@ -20,7 +20,7 @@ public class Hero extends NPC {
     
     public Hero(int x, int y, Location location, Map map, int hp, String name, int level) {
         super(x, y, game.img.HERO_SPRITE, location, map, hp, name, level, true);
-        setWeapon(Weapon.BEGINNER_SWORD);
+        equip(Weapon.BEGINNER_SWORD);
     }
     
     public boolean use(Item item) {
@@ -32,7 +32,8 @@ public class Hero extends NPC {
             } else {
                 potion.inGame(player);
             }
-            inventory.remove(potion);
+            if(inventory.contains(item))
+                inventory.remove(potion);
             return true;
         }
         return false;

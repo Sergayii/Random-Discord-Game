@@ -64,7 +64,9 @@ public abstract class Battle extends Menu {
                     
                     if(fighter2.hp <= 0) {
                         stop(fighter1.name + " won!");
-                        fighter1.addExp(fighter2.getExpGained());
+                        int exp = fighter2.getExpGained();
+                        fighter1.addExp(exp);
+                        sendMessage(mainChannel, fighter1.name + " gained " + exp + " experience!");
                         game.removeEntities(fighter1.location, fighter1.map);
                         game.sendMap("Let's look at the battlefield now!", fighter1.location, fighter1.map);
                         return;
@@ -88,7 +90,9 @@ public abstract class Battle extends Menu {
                     
                     if(fighter1.hp <= 0) {
                         stop(fighter2.name + " won!");
-                        fighter2.addExp(fighter1.getExpGained());
+                        int exp = fighter1.getExpGained();
+                        fighter2.addExp(exp);
+                        sendMessage(mainChannel, fighter2.name + " gained " + exp + " experience!");
                         game.removeEntities(fighter1.location, fighter1.map);
                         game.sendMap("Let's look at the battlefield now!", fighter1.location, fighter1.map);
                         return;
